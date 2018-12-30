@@ -1,4 +1,4 @@
-from common.tools import get_spiders_by_type, get_sx_info_by_year
+import common.tools as ct
 from common._XXX_ import all_number
 import time
 
@@ -6,25 +6,25 @@ import time
 def get_list_every_number_by_type(types):
     re = []
     if '0' in types:
-        _30m_list = get_spiders_by_type('0')
+        _30m_list = ct.get_spiders_by_type('0')
         _30m_num_dict = {}
         for x in _30m_list:
             _30m_num_dict[x.id] = x.cc.split(',')
         re.append(_30m_num_dict)
     if '1' in types:
-        _ws_list = get_spiders_by_type('1')
+        _ws_list = ct.get_spiders_by_type('1')
         _ws_num_dict = {}
         for x in _ws_list:
             _ws_num_dict[x.id] = get_list_number_by_ws(x.cc)
         re.append(_ws_num_dict)
     if '2' in types:
-        _bs_list = get_spiders_by_type('2')
+        _bs_list = ct.get_spiders_by_type('2')
         _bs_num_dict = {}
         for x in _bs_list:
             _bs_num_dict[x.id] = get_list_number_by_bs(x.cc, x.sx_card)
         re.append(_bs_num_dict)
     if '3' in types:
-        _7x_list = get_spiders_by_type('3')
+        _7x_list = ct.get_spiders_by_type('3')
         _7x_num_dict = {}
         for x in _7x_list:
             _7x_num_dict[x.id] = get_list_number_by_7x(x.cc, x.sx_card)
@@ -43,7 +43,7 @@ def get_list_number_by_ws(cc):
 
 def get_list_number_by_bs(cc, year):
     re = []
-    for x in get_sx_info_by_year(year):
+    for x in ct.get_sx_info_by_year(year):
         if x.bs in cc:
             re.append(x.hm)
     return re
@@ -51,7 +51,7 @@ def get_list_number_by_bs(cc, year):
 
 def get_list_number_by_7x(cc, year):
     re = []
-    for x in get_sx_info_by_year(year):
+    for x in ct.get_sx_info_by_year(year):
         if x.sx in cc:
             re.append(x.hm)
     return re
