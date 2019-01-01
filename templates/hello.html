@@ -3,32 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script type="text/javascript" src="../static/jquery-3.3.1.min.js"></script>
+    <style type="text/css">
+        body {background-color: Silver}
+        span {color: red}
+    </style>
 </head>
 <body>
 <h1>快到碗里来！！！</h1>
-<h2>first_bs</h2>
+<nav>
+    <a href="#">基础预测</a>
+    <a href="#">数据分析</a>
+</nav>
+<input type="checkbox" class="form-control" title="30m"  value=0 checked/><label>30m</label>
+<input type="checkbox" class="form-control" title="ws" value=1 checked/><label>ws</label>
+<input type="checkbox" class="form-control" title="bs" value=2 checked/><label>bs</label>
+<input type="checkbox" class="form-control" title="7x" value=3 /><label>7x</label>
 <div id="first_bs"></div>
-<h2>two_7x</h2>
-<div id="two_7x"></div>
-</body>
+<script type="text/javascript" src="../static/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../static/layer/layer.js"></script>
 <script>
-    $.post('ps', {types: '0,1,2'}, function (e) {
-        _html = ''
-        for (var i=0; i<e.length; i++){
-            var jsonData = JSON.stringify(e[i]);
-            _html += jsonData + '<br />'
+    var index = ''
+    get_list('0,1,2')
+
+    $('input:checkbox').change(function() {
+        index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
+        post_types = new Array();
+        $.each($('input:checkbox:checked'),function(){
+                post_types.push($(this).val())
+            });
+        types = post_types.join(",")
+        if(types){
+            get_list(types)
+        }else{
+            layer.close(index);
         }
-        $('#first_bs').html(_html)
     })
 
-    $.post('ps', {types: '0,1,3'}, function (e) {
-        _html = ''
-        for (var i=0; i<e.length; i++){
-            var jsonData = JSON.stringify(e[i]);
-            _html += jsonData + '<br />'
-        }
-        $('#two_7x').html(_html)
-    })
+    function get_list(types){
+        $.post('ps', {types: types}, function (e) {
+            _html = '<table><tr><td>期数</td><td>对否</td><td>结果</td></tr>'
+            for (var i=0; i<e.length; i++){
+                if(e[i].bingo){
+                    tmp_1 = String(e[i].cc).replace(e[i].tm, '<span>'+e[i].tm+'</span>')
+                    _html += '<tr><td>' + e[i].id + '</td><td><span>✔</td></span><td>' + tmp_1 + '</td></tr>'
+                }else{
+                    _html += '<tr><td>' + e[i].id + '</td><td>✘</td><td>' + e[i].cc + '</td></tr>'
+                }
+            }
+            $('#first_bs').html(_html)
+            layer.close(index)
+        })
+    }
 </script>
+</body>
 </html>

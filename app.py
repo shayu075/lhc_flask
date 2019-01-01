@@ -1,6 +1,6 @@
 # pip install Flask
 from flask import Flask, request, render_template, jsonify
-import common.service as os
+from common.service import get_list_same_num_by_type
 
 app = Flask(__name__)
 
@@ -8,7 +8,8 @@ app = Flask(__name__)
 @app.route('/ps', methods=['POST'])
 def hello_world():
     types = request.form['types']
-    return jsonify(os.get_list_same_num_by_type(types))
+
+    return jsonify(get_list_same_num_by_type(types))
 
 
 @app.route('/', methods=['GET'])
