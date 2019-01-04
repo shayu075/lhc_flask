@@ -37,7 +37,7 @@ def select_turn_class_by_sql(T, sql):
     return re
 
 
-def get_tuple_tm_bingo_by_id_and_cc(id, cc):
+def get_list_tm_bingo_by_id_and_cc(id, cc):
     db = pymysql.connect("localhost", "root", "123456", "my_study")
     cursor = db.cursor()
     try:
@@ -45,12 +45,14 @@ def get_tuple_tm_bingo_by_id_and_cc(id, cc):
         result = cursor.fetchone()
         for x in result:
             if x in cc:
-                return (x, True)
+                return [x, True, {'tm': result[0], 'bs': result[2], 'sx': result[3]}]
+        if result:
+            return ['', False, {'tm': result[0], 'bs': result[2], 'sx': result[3]}]
     except:
         print("Error: unable to fetch data")
     finally:
         db.close()
-    return ('', False)
+    return ['', False, None]
 
 
 if __name__ == '__main__':

@@ -1,4 +1,4 @@
-from common.tools import get_spiders_by_type, get_sx_info_by_year, get_tuple_tm_bingo_by_id_and_cc
+from common.tools import get_spiders_by_type, get_sx_info_by_year, get_list_tm_bingo_by_id_and_cc
 from common._XXX_ import all_number
 import time
 
@@ -84,16 +84,15 @@ def get_list_same_num_by_type(types):
             if is_set:
                 ps_result.append(x)
         if ps_result:
-            tmp = get_tuple_tm_bingo_by_id_and_cc(_id, ps_result)
-            re.append({'id': _id, 'cc': ps_result, 'tm': tmp[0], 'bingo': tmp[1]})
+            tmp = get_list_tm_bingo_by_id_and_cc(_id, ps_result)
+            re.append({'id': _id, 'cc': ps_result, 'tm': tmp[0], 'bingo': tmp[1], 'info': tmp[2]})
     return re
 
 
 if __name__ == '__main__':
     start_time = time.time()
-    t = '3,'
-    for x in get_list_same_num_by_type(t):
-        print(['%s:%s' % item for item in x.__dict__.items()])
+    t = '1'
+    print(get_list_same_num_by_type(t))
 
     print("used time: {}s".format(round(time.time() - start_time, 2)))
     pass
