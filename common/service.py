@@ -37,6 +37,12 @@ def get_list_every_number_by_type(types):
         for x in _7x_list:
             _7x_num_dict[x.id] = get_list_number_by_7x(x.cc, x.sx_card)
         re.append(_7x_num_dict)
+    if '4' in types:
+        _3t_list = get_spiders_by_type('4')
+        _3t_num_dict = {}
+        for x in _3t_list:
+            _3t_num_dict[x.id] = get_list_number_by_3t(x.cc)
+        re.append(_3t_num_dict)
     return re
 
 
@@ -65,10 +71,19 @@ def get_list_number_by_7x(cc, year):
     return re
 
 
+def get_list_number_by_3t(cc):
+    re = []
+    for x in all_number:
+        if x[0] in cc:
+            re.append(x)
+    return re
+
+
 def get_list_same_num_by_type(types):
     re = []
     _every_number_list = get_list_every_number_by_type(types)
     _cur_list_size = len(_every_number_list)
+    rightSize = 0
     for _id in _every_number_list[0].keys():
         ps_result = []
         for x in _every_number_list[0].get(_id):
@@ -86,6 +101,11 @@ def get_list_same_num_by_type(types):
         if ps_result:
             tmp = get_list_tm_bingo_by_id_and_cc(_id, ps_result)
             re.append({'id': _id, 'cc': ps_result, 'tm': tmp[0], 'bingo': tmp[1], 'info': tmp[2]})
+            if tmp[1]:
+                rightSize += 1
+    total = int(re[0].get('id')[-3:]) + (149 - int(re[-1].get('id')[-3:]) + 1)
+    if not re[0]['tm']:
+        re[0]['tm'] = round(rightSize/total*100, 2)
     return re
 
 
