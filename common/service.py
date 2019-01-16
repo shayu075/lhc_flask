@@ -105,7 +105,7 @@ def get_list_same_num_by_type(types, year, month):
                 rightSize += 1
 
     if not re[0]['tm']:
-        re[0]['tm'] = round(rightSize/_cur_list_size*100, 2)
+        re[0]['tm'] = round(rightSize/len(re)*100, 2)
     return re
 
 
