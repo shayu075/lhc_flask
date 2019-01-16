@@ -103,9 +103,9 @@ def get_list_same_num_by_type(types, year, month):
             re.append({'id': _id, 'cc': ps_result, 'tm': tmp[0], 'bingo': tmp[1], 'info': tmp[2]})
             if tmp[1]:
                 rightSize += 1
-    total = int(re[0].get('id')[-3:]) + (149 - int(re[-1].get('id')[-3:]) + 1)
+
     if not re[0]['tm']:
-        re[0]['tm'] = round(rightSize/total*100, 2)
+        re[0]['tm'] = round(rightSize/_cur_list_size*100, 2)
     return re
 
 
