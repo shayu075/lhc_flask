@@ -3,10 +3,10 @@ from common._XXX_ import all_number
 import time
 
 
-def get_list_every_number_by_type(types):
+def get_list_every_number_by_type(types, year, month):
     re = []
     if len(types) < 2:
-        _single_list = get_spiders_by_type(types)
+        _single_list = get_spiders_by_type(types, year, month)
         _single_dict = {}
         for x in _single_list:
             _single_dict[x.id] = x.cc.split(',')
@@ -14,31 +14,31 @@ def get_list_every_number_by_type(types):
         return re
 
     if '0' in types:
-        _30m_list = get_spiders_by_type('0')
+        _30m_list = get_spiders_by_type('0', year, month)
         _30m_num_dict = {}
         for x in _30m_list:
             _30m_num_dict[x.id] = x.cc.split(',')
         re.append(_30m_num_dict)
     if '1' in types:
-        _ws_list = get_spiders_by_type('1')
+        _ws_list = get_spiders_by_type('1', year, month)
         _ws_num_dict = {}
         for x in _ws_list:
             _ws_num_dict[x.id] = get_list_number_by_ws(x.cc)
         re.append(_ws_num_dict)
     if '2' in types:
-        _bs_list = get_spiders_by_type('2')
+        _bs_list = get_spiders_by_type('2', year, month)
         _bs_num_dict = {}
         for x in _bs_list:
             _bs_num_dict[x.id] = get_list_number_by_bs(x.cc, x.sx_card)
         re.append(_bs_num_dict)
     if '3' in types:
-        _7x_list = get_spiders_by_type('3')
+        _7x_list = get_spiders_by_type('3', year, month)
         _7x_num_dict = {}
         for x in _7x_list:
             _7x_num_dict[x.id] = get_list_number_by_7x(x.cc, x.sx_card)
         re.append(_7x_num_dict)
     if '4' in types:
-        _3t_list = get_spiders_by_type('4')
+        _3t_list = get_spiders_by_type('4', year, month)
         _3t_num_dict = {}
         for x in _3t_list:
             _3t_num_dict[x.id] = get_list_number_by_3t(x.cc)
@@ -79,9 +79,9 @@ def get_list_number_by_3t(cc):
     return re
 
 
-def get_list_same_num_by_type(types):
+def get_list_same_num_by_type(types, year, month):
     re = []
-    _every_number_list = get_list_every_number_by_type(types)
+    _every_number_list = get_list_every_number_by_type(types, year, month)
     _cur_list_size = len(_every_number_list)
     rightSize = 0
     for _id in _every_number_list[0].keys():

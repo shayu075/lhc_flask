@@ -17,8 +17,10 @@ app = Flask(__name__)
 @app.route('/lhc_flask/ps', methods=['GET'])
 def hello_world():
     types = request.args.get('types')
+    year = request.args.get('year')
+    month = request.args.get('month')
 
-    return jsonify(get_list_same_num_by_type(types))
+    return jsonify(get_list_same_num_by_type(types, year, month))
 
 
 @app.route('/lhc_flask/', methods=['GET'])

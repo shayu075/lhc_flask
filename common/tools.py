@@ -14,9 +14,12 @@ def get_sx_info_by_year(year):
     return _sx_card.get(year)
 
 
-def get_spiders_by_type(_type):
-    print('================spiders_record开始请求%s数据=================' % (_type,))
-    sql = 'select * from spiders_record where type = ' + _type + ' order by id DESC'
+def get_spiders_by_type(_type, year, month):
+    print('================spiders_record开始请求%s数据%s-%s=================' % (_type, year, month))
+    sql = 'select * from spiders_record where type = ' + _type \
+          + ' and `year` >= ' + year \
+          + ' and `month` >= ' + month \
+          + ' order by id DESC'
 
     return select_turn_class_by_sql(SpidersDate, sql)
 
